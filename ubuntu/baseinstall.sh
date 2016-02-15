@@ -22,11 +22,10 @@ tune_system()
 	fi	
 }
 
-initial_install()
+configure_datadisks()
 {
-    apt-get update
-    apt-get dist-upgrade -y
-    apt-get install htop ntp
+	log "Formatting and configuring the data disks"
+	bash vm-disk-utils-0.1.sh
 }
 
 datastax_repo()
@@ -35,10 +34,11 @@ datastax_repo()
     curl -L https://debian.datastax.com/debian/repo_key | sudo apt-key add -
 }
 
-configure_datadisks()
+initial_install()
 {
-	log "Formatting and configuring the data disks"
-	bash vm-disk-utils-0.1.sh
+    apt-get update
+    apt-get dist-upgrade -y
+    apt-get install htop ntp
 }
 
 tune_system()
