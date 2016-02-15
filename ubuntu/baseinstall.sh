@@ -38,12 +38,12 @@ initial_install()
 {
     apt-get update
     apt-get dist-upgrade -y
-    apt-get install htop ntp
+    apt-get install htop ntp -y
 }
 
-tune_system()
-configure_datadisks()
-datastax_repo()
-initial_install()
+tune_system
+configure_datadisks
+datastax_repo
+initial_install
 
 exit 0
