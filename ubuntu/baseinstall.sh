@@ -45,3 +45,4 @@ tune_system
 configure_datadisks
 datastax_repo
 initial_install
+exit 0
