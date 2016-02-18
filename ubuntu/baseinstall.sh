@@ -1,5 +1,5 @@
 #!/bin/bash
-test="testing"
+JDKDL=""
 
 if [ "${UID}" -ne 0 ];
 then
@@ -7,6 +7,22 @@ then
     echo "You must be root to run this program." >&2
     exit 3
 fi
+
+while getopts ":d" opt; do
+  case $opt in
+    a)
+      $JDKDL=$OPTARG    
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done 
 
 tune_system()
 {
@@ -39,6 +55,29 @@ initial_install()
     apt-get update
     apt-get dist-upgrade -y
     apt-get install htop ntp -y
+}
+
+installjdk()
+{
+    mkdir /tmp/dl
+    wget -O /tmp/dl/jdk8.gz $JDKDL
+    tar -xf /tmp/dl/jdk8.gz -C /tmp/dl
+    mkdir -p /usr/lib/jvm/
+    JDKDIR=`ls /tmp/dl | grep jdk1.8`
+    mv /temp/dl/$JDKDIR /usr/lib/jvm/jdk1.8.0
+    chown root:root /usr/lib/jvm/jdk1.8.0 -R
+    update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0/bin/java" 1
+    update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0/bin/javac" 1
+    update-alternatives --install "/usr/bin/keytool" "keytool" "/usr/lib/jvm/jdk1.8.0/bin/keytool" 1
+    update-alternatives --install "/usr/bin/pack200" "pack200" "/usr/lib/jvm/jdk1.8.0/bin/pack200" 1
+    update-alternatives --install "/usr/bin/rmid" "rmid" "/usr/lib/jvm/jdk1.8.0/bin/rmid" 1
+    update-alternatives --install "/usr/bin/rmiregistry" "rmiregistry" "/usr/lib/jvm/jdk1.8.0/bin/rmiregistry" 1
+    update-alternatives --install "/usr/bin/unpack200" "unpack200" "/usr/lib/jvm/jdk1.8.0/bin/unpack200" 1
+    update-alternatives --install "/usr/bin/orbd" "orbd" "/usr/lib/jvm/jdk1.8.0/bin/orbd" 1
+    update-alternatives --install "/usr/bin/servertool" "servertool" "/usr/lib/jvm/jdk1.8.0/bin/servertool" 1
+
+    # cleanup
+    rm /opt/dl -R  
 }
 
 tune_system
