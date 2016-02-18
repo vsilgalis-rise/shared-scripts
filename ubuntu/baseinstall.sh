@@ -10,7 +10,7 @@ fi
 
 while getopts ":d:" opt; do
   case $opt in
-    a)
+    d)
       JDKDL=$OPTARG    
       ;;
     \?)
