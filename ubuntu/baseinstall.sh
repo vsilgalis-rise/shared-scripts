@@ -8,10 +8,10 @@ then
     exit 3
 fi
 
-while getopts ":d" opt; do
+while getopts ":d:" opt; do
   case $opt in
     a)
-      $JDKDL=$OPTARG    
+      JDKDL=$OPTARG    
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -40,7 +40,7 @@ tune_system()
 
 configure_datadisks()
 {
-	log "Formatting and configuring the data disks"
+	echo "Formatting and configuring the data disks"
 	bash vm-disk-utils-0.1.sh
 }
 
@@ -63,8 +63,8 @@ install_jdk()
     wget -O /tmp/dl/jdk8.gz $JDKDL
     tar -xf /tmp/dl/jdk8.gz -C /tmp/dl
     mkdir -p /usr/lib/jvm/
-    JDKDIR=`ls /tmp/dl | grep jdk1.8`
-    mv /temp/dl/$JDKDIR /usr/lib/jvm/jdk1.8.0
+    JDKDIR=`ls /tmp/dl | grep jdk1.8.`
+    mv /tmp/dl/$JDKDIR /usr/lib/jvm/jdk1.8.0
     chown root:root /usr/lib/jvm/jdk1.8.0 -R
     update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0/bin/java" 1
     update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0/bin/javac" 1
@@ -76,8 +76,6 @@ install_jdk()
     update-alternatives --install "/usr/bin/orbd" "orbd" "/usr/lib/jvm/jdk1.8.0/bin/orbd" 1
     update-alternatives --install "/usr/bin/servertool" "servertool" "/usr/lib/jvm/jdk1.8.0/bin/servertool" 1
 
-    # cleanup
-    rm /opt/dl -R  
 }
 
 tune_system
