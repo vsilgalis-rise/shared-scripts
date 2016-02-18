@@ -57,7 +57,7 @@ initial_install()
     apt-get install htop ntp -y
 }
 
-installjdk()
+install_jdk()
 {
     mkdir /tmp/dl
     wget -O /tmp/dl/jdk8.gz $JDKDL
@@ -84,4 +84,5 @@ tune_system
 configure_datadisks
 datastax_repo
 initial_install
+install_jdk
 exit 0
