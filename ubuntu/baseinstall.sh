@@ -75,7 +75,6 @@ install_jdk()
     update-alternatives --install "/usr/bin/unpack200" "unpack200" "/usr/lib/jvm/jdk1.8.0/bin/unpack200" 1
     update-alternatives --install "/usr/bin/orbd" "orbd" "/usr/lib/jvm/jdk1.8.0/bin/orbd" 1
     update-alternatives --install "/usr/bin/servertool" "servertool" "/usr/lib/jvm/jdk1.8.0/bin/servertool" 1
-
 }
 
 tune_system
