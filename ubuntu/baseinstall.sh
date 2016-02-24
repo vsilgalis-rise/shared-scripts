@@ -77,9 +77,16 @@ install_jdk()
     update-alternatives --install "/usr/bin/servertool" "servertool" "/usr/lib/jvm/jdk1.8.0/bin/servertool" 1
 }
 
+elastic_repo()
+{
+    curl https://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+    echo "deb https://packages.elastic.co/beats/apt stable main" |  sudo tee -a /etc/apt/sources.list.d/beats.list
+}
+
 tune_system
 configure_datadisks
 datastax_repo
+elastic_repo
 initial_install
 install_jdk
 exit 0
